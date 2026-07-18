@@ -9,9 +9,11 @@ function App() {
   return (
     <>
       <Navbar />
+
       <button onClick={() => setApplications(applications + 1)}>
         Apply
       </button>
+
       <button
         onClick={() => {
           if (applications > 0) {
@@ -25,7 +27,12 @@ function App() {
       <button onClick={() => setApplications(0)}>
         Reset
       </button>
+
       <h2>Applications Submitted: {applications}</h2>
+
+      {applications > 0 && (
+        <p>Application Submitted Successfully ✅</p>
+      )}
 
       <div className="company-container">
         <CompanyCard
