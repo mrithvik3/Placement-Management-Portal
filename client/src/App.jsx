@@ -1,13 +1,31 @@
+import "./styles/App.css";
 import Navbar from "./components/Navbar";
+import CompanyCard from "./components/CompanyCard";
 
 function App() {
   return (
     <>
       <Navbar />
 
-      <h1>Welcome to React!</h1>
+      <div className="company-container">
+        <CompanyCard
+          company="Amazon"
+          salaryPackage="28 LPA"
+          location="Hyderabad"
+        />
 
-      <p>This is my first React application built using React and Vite.</p>
+        <CompanyCard
+          company="Microsoft"
+          salaryPackage="32 LPA"
+          location="Bengaluru"
+        />
+
+        <CompanyCard
+          company="Google"
+          salaryPackage="40 LPA"
+          location="Hyderabad"
+        />
+      </div>
     </>
   );
 }

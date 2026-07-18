@@ -1,9 +1,11 @@
+import "./Navbar.css";
+
 function Navbar() {
   return (
-    <nav>
-      <h2>Placement Management Portal</h2>
+    <nav className="navbar">
+      <h2 className="logo">Placement Management Portal</h2>
 
-      <ul>
+      <ul className="nav-links">
         <li>Home</li>
         <li>Companies</li>
         <li>Login</li>
