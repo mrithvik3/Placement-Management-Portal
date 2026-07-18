@@ -1,13 +1,13 @@
 .company-card {
-  width: 250px;
-  background: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-
-  transition: transform 0.3s ease;
+    width: 280px;
+    padding: 20px;
+    border-radius: 10px;
 }
 
-.company-card:hover {
-  transform: translateY(-5px);
+.company-card h2{
+    margin-bottom:15px;
+}
+
+.company-card p{
+    margin:8px 0;
 }
