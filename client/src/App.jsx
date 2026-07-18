@@ -111,6 +111,7 @@ function App() {
         <input type="text" placeholder="Eligibility" value={eligibility} onChange={(e) => setEligibility(e.target.value)} />
         <input type="text" placeholder="Deadline" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
         <input type="text" placeholder="Skills" value={skills} onChange={(e) => setSkills(e.target.value)} />
+        <button type="button" className="primary-button company-submit" onClick={handleAddCompany}>Add Company</button>
       </div>
       </section>
 
@@ -136,9 +137,11 @@ function App() {
       </button>
         </div>
 
+      <div className="application-status">
       {applications > 0 && (
         <p>Application Submitted Successfully ✅</p>
       )}
+      </div>
 
       </section>
 

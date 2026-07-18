@@ -27,6 +27,7 @@ h1 { max-width: 650px; margin-bottom: 12px; font-size: clamp(2rem, 4vw, 3.25rem)
 .company-form input { width: 100%; min-height: 46px; padding: 0 13px; color: #172033; background: #fbfcfe; border: 1px solid #dbe3ef; border-radius: 9px; outline: none; transition: border-color .2s, box-shadow .2s; }
 .company-form input::placeholder { color: #94a3b8; }
 .company-form input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, .14); }
+.company-submit { grid-column: 4; }
 
 .primary-button, .secondary-button, .text-button { min-height: 44px; padding: 0 16px; border-radius: 9px; font-weight: 650; cursor: pointer; transition: transform .15s, box-shadow .15s, background .15s; }
 .primary-button { color: #fff; background: #2563eb; border: 1px solid #2563eb; box-shadow: 0 5px 12px rgba(37, 99, 235, .22); }
@@ -34,10 +35,11 @@ h1 { max-width: 650px; margin-bottom: 12px; font-size: clamp(2rem, 4vw, 3.25rem)
 .secondary-button { color: #1e40af; background: #eff6ff; border: 1px solid #bfdbfe; }
 .text-button { color: #64748b; background: transparent; border: 1px solid transparent; }
 
-.application-panel { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin: 24px 0 42px; background: linear-gradient(115deg, #eff6ff, #fff); }
+.application-panel { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px 24px; margin: 24px 0 42px; background: linear-gradient(115deg, #eff6ff, #fff); }
 .application-copy .eyebrow { margin-bottom: 5px; }
 .application-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.application-panel > p { width: 100%; margin: 0; color: #15803d; font-size: .9rem; }
+.application-status { grid-column: 1 / -1; }
+.application-status p { margin: 0; color: #15803d; font-size: .9rem; }
 
 .companies-section { margin-top: 10px; }
 .company-count { padding: 7px 11px; color: #475569; background: #eaf0f8; border-radius: 999px; font-size: .82rem; font-weight: 650; }
@@ -49,5 +51,5 @@ h1 { max-width: 650px; margin-bottom: 12px; font-size: clamp(2rem, 4vw, 3.25rem)
 .company-card strong { color: #334155; }
 .company-card button { width: 100%; min-height: 40px; margin-top: 15px; color: #1d4ed8; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
-@media (max-width: 780px) { .dashboard { padding: 30px 16px 48px; } .page-intro, .application-panel, .section-heading { align-items: flex-start; flex-direction: column; } .company-form { grid-template-columns: repeat(2, minmax(0, 1fr)); } .application-actions { width: 100%; } }
+@media (max-width: 780px) { .dashboard { padding: 30px 16px 48px; } .page-intro, .section-heading { align-items: flex-start; flex-direction: column; } .application-panel { grid-template-columns: 1fr; } .company-form { grid-template-columns: repeat(2, minmax(0, 1fr)); } .company-submit { grid-column: auto; } .application-actions { width: 100%; } }
 @media (max-width: 500px) { .company-form { grid-template-columns: 1fr; } .form-section, .application-panel { padding: 20px; } .application-actions button { flex: 1; } }
