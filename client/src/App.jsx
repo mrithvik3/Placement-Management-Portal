@@ -1,9 +1,14 @@
+import Navbar from "./components/Navbar";
+
 function App() {
   return (
-    <div>
-      <h1>Placement Management Portal</h1>
-      <p>Welcome to our MERN Project 🚀</p>
-    </div>
+    <>
+      <Navbar />
+
+      <h1>Welcome to React!</h1>
+
+      <p>This is my first React application built using React and Vite.</p>
+    </>
   );
 }
 
