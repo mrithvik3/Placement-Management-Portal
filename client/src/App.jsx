@@ -87,6 +87,12 @@ function App() {
     setSkills("");
   };
 
+  const handleDelete = (id) => {
+    setCompanies((currentCompanies) =>
+      currentCompanies.filter((company) => company.id !== id)
+    );
+  };
+
   return (
     <>
       <Navbar />
@@ -113,7 +119,7 @@ function App() {
         <input type="text" placeholder="Skills" value={skills} onChange={(e) => setSkills(e.target.value)} />
         <button type="button" className="primary-button company-submit" onClick={handleAddCompany}>Add Company</button>
       </div>
-      </section>
+      </section>  
 
       <section className="application-panel">
         <div className="application-copy"><p className="eyebrow">My applications</p><h2>Applications submitted: {applications}</h2></div>
@@ -154,6 +160,7 @@ function App() {
       {companies.map((company) => (
       <CompanyCard
         key={company.id}
+        id={company.id}
         company={company.company}
         role={company.role}
         salaryPackage={company.salaryPackage}
@@ -162,6 +169,7 @@ function App() {
         deadline={company.deadline}
         skills={company.skills}
         status={company.status}
+        onDelete={handleDelete}
       />
     ))}
         </div>
