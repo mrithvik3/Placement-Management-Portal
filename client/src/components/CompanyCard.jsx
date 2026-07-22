@@ -9,6 +9,7 @@ function CompanyCard({
   skills,
   status,
   onDelete,
+  onEdit,
 }) {
   return (
     <div className="company-card">
@@ -28,11 +29,31 @@ function CompanyCard({
 
       <p><strong>Status:</strong> {status}</p>
 
-      <button>Apply</button>
+      <div className="card-buttons">
+        <button>Apply</button>
 
-      <button onClick={() => onDelete(id)}>
-        Delete
-      </button>
+        <button
+          onClick={() =>
+            onEdit({
+              id,
+              company,
+              role,
+              salaryPackage,
+              location,
+              eligibility,
+              deadline,
+              skills,
+              status,
+            })
+          }
+        >
+          Edit
+        </button>
+
+        <button onClick={() => onDelete(id)}>
+          Delete
+        </button>
+      </div>
     </div>
   );
 }

@@ -13,6 +13,7 @@ function App() {
   const [deadline, setDeadline] = useState("");
   const [skills, setSkills] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingId, setEditingId] = useState(null);
 
   const defaultCompanies = [
   {
@@ -75,20 +76,41 @@ useEffect(() => {
 const handleAddCompany = () => {
   if (!companyName.trim()) return;
 
-  setCompanies((currentCompanies) => [
-    ...currentCompanies,
-    {
-      id: Date.now(),
-      company: companyName,
-      role,
-      salaryPackage,
-      location,
-      eligibility,
-      deadline,
-      skills,
-      status: "Open",
-    },
-  ]);
+  if (editingId !== null) {
+    setCompanies((currentCompanies) =>
+      currentCompanies.map((company) =>
+        company.id === editingId
+          ? {
+              ...company,
+              company: companyName,
+              role,
+              salaryPackage,
+              location,
+              eligibility,
+              deadline,
+              skills,
+            }
+          : company
+      )
+    );
+
+    setEditingId(null);
+  } else {
+    setCompanies((currentCompanies) => [
+      ...currentCompanies,
+      {
+        id: Date.now(),
+        company: companyName,
+        role,
+        salaryPackage,
+        location,
+        eligibility,
+        deadline,
+        skills,
+        status: "Open",
+      },
+    ]);
+  }
 
   setCompanyName("");
   setRole("");
@@ -104,6 +126,17 @@ const handleAddCompany = () => {
       currentCompanies.filter((company) => company.id !== id)
     );
   };
+  const handleEdit = (company) => {
+  setEditingId(company.id);
+
+  setCompanyName(company.company);
+  setRole(company.role);
+  setSalaryPackage(company.salaryPackage);
+  setLocation(company.location);
+  setEligibility(company.eligibility);
+  setDeadline(company.deadline);
+  setSkills(company.skills);
+};
 
   const filteredCompanies = companies.filter((company) =>
   company.company.toLowerCase().includes(searchTerm.toLowerCase())
@@ -133,8 +166,13 @@ const handleAddCompany = () => {
         <input type="text" placeholder="Eligibility" value={eligibility} onChange={(e) => setEligibility(e.target.value)} />
         <input type="text" placeholder="Deadline" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
         <input type="text" placeholder="Skills" value={skills} onChange={(e) => setSkills(e.target.value)} />
-        <button type="button" className="primary-button company-submit" onClick={handleAddCompany}>Add Company</button>
-      </div>
+        <button
+          type="button"
+          className="primary-button company-submit"
+          onClick={handleAddCompany}
+        >
+          {editingId !== null ? "Update Company" : "Add Company"}
+        </button>      </div>
       </section>  
 
       <section className="application-panel">
@@ -161,7 +199,7 @@ const handleAddCompany = () => {
 
       <div className="application-status">
       {applications > 0 && (
-        <p>Application Submitted Successfully ✅</p>
+        <p>Application Submitted Successfully </p>
       )}
       </div>
 
@@ -196,6 +234,7 @@ const handleAddCompany = () => {
         skills={company.skills}
         status={company.status}
         onDelete={handleDelete}
+        onEdit={handleEdit}
       />
     ))}
         </div>
