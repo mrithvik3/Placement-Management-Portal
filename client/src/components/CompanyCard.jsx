@@ -1,4 +1,17 @@
-function CompanyCard({
+import {
+  FaBuilding,
+  FaBriefcase,
+  FaMoneyBillWave,
+  FaMapMarkerAlt,
+  FaUserGraduate,
+  FaCalendarAlt,
+  FaCode,
+  FaEdit,
+  FaTrash
+} from "react-icons/fa";
+
+export default function CompanyCard(props) {
+  const {
   id,
   company,
   role,
@@ -7,55 +20,105 @@ function CompanyCard({
   eligibility,
   deadline,
   skills,
-  status,
+  status = "Open",
+  isApplied,
+  onApply,
+  onWithdraw,
   onDelete,
-  onEdit,
-}) {
+  onEdit
+} = props;
+
   return (
     <div className="company-card">
-      <h2>{company}</h2>
+      <div className="card-header">
+        <div className="company-title">
+          <FaBuilding className="icon-building" />
+          <h2>{company}</h2>
+        </div>
+        <span className={`status-badge ${status.toLowerCase()}`}>
+          {status}
+        </span>
+      </div>
 
-      <p><strong>Role:</strong> {role}</p>
+      <div className="card-body">
+        <div className="info-row highlight">
+          <FaBriefcase />
+          <div>
+            <label>Role</label>
+            <strong>{role}</strong>
+          </div>
+        </div>
 
-      <p><strong>Package:</strong> {salaryPackage}</p>
+        <div className="info-row">
+          <FaMoneyBillWave />
+          <div>
+            <label>Package</label>
+            <span>{salaryPackage}</span>
+          </div>
+        </div>
 
-      <p><strong>Location:</strong> {location}</p>
+        <div className="info-row">
+          <FaMapMarkerAlt />
+          <div>
+            <label>Location</label>
+            <span>{location}</span>
+          </div>
+        </div>
 
-      <p><strong>Eligibility:</strong> {eligibility}</p>
+        <div className="info-row">
+          <FaUserGraduate />
+          <div>
+            <label>Eligibility</label>
+            <span>{eligibility}</span>
+          </div>
+        </div>
 
-      <p><strong>Deadline:</strong> {deadline}</p>
+        <div className="info-row">
+          <FaCalendarAlt />
+          <div>
+            <label>Deadline</label>
+            <span>{deadline}</span>
+          </div>
+        </div>
 
-      <p><strong>Skills:</strong> {skills}</p>
+        <div className="info-row full-width">
+          <FaCode />
+          <div>
+            <label>Skills</label>
+            <span>{skills}</span>
+          </div>
+        </div>
+      </div>
 
-      <p><strong>Status:</strong> {status}</p>
-
-      <div className="card-buttons">
-        <button>Apply</button>
-
+      <div className="card-footer">
+        {isApplied ? (
         <button
-          onClick={() =>
-            onEdit({
-              id,
-              company,
-              role,
-              salaryPackage,
-              location,
-              eligibility,
-              deadline,
-              skills,
-              status,
-            })
-          }
+          className="apply-btn applied"
+          onClick={() => onWithdraw(id)}
         >
-          Edit
+          Withdraw
         </button>
+      ) : (
+        <button
+          className="apply-btn"
+          onClick={() => onApply(id)}
+        >
+          Apply Now
+        </button>
+      )}
 
-        <button onClick={() => onDelete(id)}>
-          Delete
-        </button>
+        {onEdit && (
+          <button className="icon-btn edit" onClick={() => onEdit(props)}>
+            <FaEdit />
+          </button>
+        )}
+
+        {onDelete && (
+          <button className="icon-btn delete" onClick={() => onDelete(id)}>
+            <FaTrash />
+          </button>
+        )}
       </div>
     </div>
   );
 }
-
-export default CompanyCard;
