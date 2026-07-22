@@ -1,7 +1,7 @@
 import "./styles/App.css";
 import Navbar from "./components/Navbar";
 import CompanyCard from "./components/CompanyCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [applications, setApplications] = useState(0);
@@ -12,8 +12,9 @@ function App() {
   const [eligibility, setEligibility] = useState("");
   const [deadline, setDeadline] = useState("");
   const [skills, setSkills] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const [companies, setCompanies] = useState([
+  const defaultCompanies = [
   {
     id: 1,
     company: "Amazon",
@@ -58,40 +59,55 @@ function App() {
     skills: "React, JavaScript",
     status: "Open",
   },
-]);
+];
 
-  const handleAddCompany = () => {
-    if (!companyName.trim()) return;
+const [companies, setCompanies] = useState(() => {
+  const savedCompanies = localStorage.getItem("companies");
+  return savedCompanies
+    ? JSON.parse(savedCompanies)
+    : defaultCompanies;
+});
 
-    setCompanies((currentCompanies) => [
-      ...currentCompanies,
-      {
-        id: Date.now(),
-        company: companyName,
-        role,
-        salaryPackage,
-        location,
-        eligibility,
-        deadline,
-        skills,
-        status: "Open",
-      },
-    ]);
+useEffect(() => {
+  localStorage.setItem("companies", JSON.stringify(companies));
+}, [companies]);
 
-    setCompanyName("");
-    setRole("");
-    setSalaryPackage("");
-    setLocation("");
-    setEligibility("");
-    setDeadline("");
-    setSkills("");
-  };
+const handleAddCompany = () => {
+  if (!companyName.trim()) return;
+
+  setCompanies((currentCompanies) => [
+    ...currentCompanies,
+    {
+      id: Date.now(),
+      company: companyName,
+      role,
+      salaryPackage,
+      location,
+      eligibility,
+      deadline,
+      skills,
+      status: "Open",
+    },
+  ]);
+
+  setCompanyName("");
+  setRole("");
+  setSalaryPackage("");
+  setLocation("");
+  setEligibility("");
+  setDeadline("");
+  setSkills("");
+};
 
   const handleDelete = (id) => {
     setCompanies((currentCompanies) =>
       currentCompanies.filter((company) => company.id !== id)
     );
   };
+
+  const filteredCompanies = companies.filter((company) =>
+  company.company.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   return (
     <>
@@ -154,10 +170,20 @@ function App() {
       <section className="companies-section">
         <div className="section-heading">
           <div><p className="eyebrow">Available roles</p><h2>Featured companies</h2></div>
-          <span className="company-count">{companies.length} roles</span>
+          <span className="company-count">
+            {filteredCompanies.length} role{filteredCompanies.length !== 1 ? "s" : ""}
+          </span>
+        </div>
+        <div className="search-box">
+          <input
+            type="text"
+            placeholder="🔍 Search company..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
         <div className="company-container">
-      {companies.map((company) => (
+      {filteredCompanies.map((company) => (
       <CompanyCard
         key={company.id}
         id={company.id}
