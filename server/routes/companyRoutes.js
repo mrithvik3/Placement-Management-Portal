@@ -7,12 +7,18 @@ import {
   deleteCompany,
 } from "../controllers/companyController.js";
 
+import authMiddleware from "../middleware/authMiddleware.js";
+import roleMiddleware from "../middleware/roleMiddleware.js";
+
 const router = express.Router();
 
-router.get("/", getCompanies);
-router.post("/", createCompany);
-router.get("/:id", getCompanyById);
-router.put("/:id", updateCompany);
-router.delete("/:id", deleteCompany);
+// Logged-in users
+router.get("/", authMiddleware, getCompanies);
+router.get("/:id", authMiddleware, getCompanyById);
+
+// Admin only
+router.post("/", authMiddleware, roleMiddleware("admin"), createCompany);
+router.put("/:id", authMiddleware, roleMiddleware("admin"), updateCompany);
+router.delete("/:id", authMiddleware, roleMiddleware("admin"), deleteCompany);
 
 export default router;

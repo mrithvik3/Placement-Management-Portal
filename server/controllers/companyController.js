@@ -1,39 +1,16 @@
 import Company from "../models/Company.js";
 
+// GET all companies
 export const getCompanies = async (req, res) => {
   try {
     const companies = await Company.find();
-
-    res.status(200).json(companies);
+    res.json(companies);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
-export const createCompany = async (req, res) => {
-  try {
-    const { name, location, package: salaryPackage, status } = req.body;
-
-    const company = await Company.create({
-      name,
-      location,
-      package: salaryPackage,
-      status,
-    });
-
-    res.status(201).json({
-      message: "Company added successfully",
-      company,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
-};
-
+// GET company by ID
 export const getCompanyById = async (req, res) => {
   try {
     const company = await Company.findById(req.params.id);
@@ -52,16 +29,63 @@ export const getCompanyById = async (req, res) => {
   }
 };
 
+// CREATE company
+export const createCompany = async (req, res) => {
+  try {
+    const {
+      name,
+      role,
+      package: salaryPackage,
+      location,
+      eligibility,
+      deadline,
+      skills,
+      status,
+    } = req.body;
+
+    const company = await Company.create({
+      name,
+      role,
+      package: salaryPackage,
+      location,
+      eligibility,
+      deadline,
+      skills,
+      status,
+    });
+
+    res.status(201).json(company);
+  } catch (err) {
+    res.status(400).json({
+      error: err.message,
+    });
+  }
+};
+
+// UPDATE company
 export const updateCompany = async (req, res) => {
   try {
-    const { name, location, package: salaryPackage, status } = req.body;
+    const {
+      name,
+      role,
+      package: salaryPackage,
+      location,
+      eligibility,
+      deadline,
+      skills,
+      status,
+    } = req.body;
 
     const company = await Company.findByIdAndUpdate(
       req.params.id,
       {
         name,
-        location,
+        role,
         package: salaryPackage,
+        location,
+        eligibility,
+        deadline,
+        skills,
         status,
       },
       {
@@ -76,17 +100,15 @@ export const updateCompany = async (req, res) => {
       });
     }
 
-    res.json({
-      message: "Company updated successfully",
-      company,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
+    res.json(company);
+  } catch (err) {
+    res.status(400).json({
+      error: err.message,
     });
   }
 };
 
+// DELETE company
 export const deleteCompany = async (req, res) => {
   try {
     const company = await Company.findByIdAndDelete(req.params.id);

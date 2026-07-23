@@ -1,0 +1,13 @@
+.companies-page {
+  padding: 20px;
+}
+
+.companies-page h1 {
+  margin-bottom: 24px;
+}
+
+.companies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 24px;
+}
