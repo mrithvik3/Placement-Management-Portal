@@ -1,16 +1,19 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import companyRoutes from "./routes/companyRoutes.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
+connectDB();
 
 const app = express();
 
-// Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json());   // ← This is REQUIRED
 
-// Home Route
+app.use("/api/companies", companyRoutes);
+
 app.get("/", (req, res) => {
   res.send("Placement Portal Backend Running 🚀");
 });
