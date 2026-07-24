@@ -26,6 +26,7 @@ function CompanyCard({
   onWithdraw,
   onEdit,
   onDelete,
+  onViewApplicants,
 }) {
    console.log({
     id,
@@ -166,6 +167,15 @@ function CompanyCard({
               className="rounded-xl bg-red-100 p-3 text-red-600 transition hover:bg-red-200"
             >
               <Trash2 size={18} />
+            </button>
+          )}
+
+          {onViewApplicants && (
+            <button
+              onClick={onViewApplicants}
+              className="rounded-xl bg-blue-100 px-4 py-3 text-sm font-medium text-blue-700 transition hover:bg-blue-200"
+            >
+              View Applicants
             </button>
           )}
 

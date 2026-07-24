@@ -9,6 +9,7 @@ import ConfirmModal from "../components/common/ConfirmModal";
 import EmptyState from "../components/common/EmptyState";
 import { getCompanies, createCompany, updateCompany, deleteCompany } from "../services/companyService";
 import { applyToCompany, withdrawApplication, getMyApplications } from "../services/applicationService";
+import { useNavigate } from "react-router-dom";
 
 export default function Companies() {
   const [companies, setCompanies] = useState([]);
@@ -20,6 +21,7 @@ export default function Companies() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCompany, setEditingCompany] = useState(null);
   const [companyToDelete, setCompanyToDelete] = useState(null);
+  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
@@ -174,7 +176,28 @@ export default function Companies() {
               <EmptyState title={searchTerm || statusFilter !== "All" ? "No matching companies" : "No companies available"} description={searchTerm || statusFilter !== "All" ? "Try changing your search or filters." : "Companies will appear here once they are added."} />
             ) : (
               filteredCompanies.map((company) => (
-                <CompanyCard key={company._id} id={company._id} company={company.name} role={company.role} salaryPackage={company.package} location={company.location} eligibility={company.eligibility} deadline={company.deadline} skills={company.skills?.join(", ")} status={company.status} isApplied={company.isApplied} onApply={user.role === "student" ? handleApply : null} onWithdraw={user.role === "student" ? handleWithdraw : null} onEdit={user.role === "admin" ? () => openModal(company) : null} onDelete={user.role === "admin" ? () => setCompanyToDelete(company) : null} />
+                <CompanyCard
+                  key={company._id}
+                  id={company._id}
+                  company={company.name}
+                  role={company.role}
+                  salaryPackage={company.package}
+                  location={company.location}
+                  eligibility={company.eligibility}
+                  deadline={company.deadline}
+                  skills={company.skills?.join(", ")}
+                  status={company.status}
+                  isApplied={company.isApplied}
+                  onApply={user.role === "student" ? handleApply : null}
+                  onWithdraw={user.role === "student" ? handleWithdraw : null}
+                  onEdit={user.role === "admin" ? () => openModal(company) : null}
+                  onDelete={user.role === "admin" ? () => setCompanyToDelete(company) : null}
+                  onViewApplicants={
+                    user.role === "admin"
+                      ? () => navigate(`/companies/${company._id}/applicants`)
+                      : null
+                  }
+                />
               ))
             )}
           </div>

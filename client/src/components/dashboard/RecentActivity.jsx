@@ -1,39 +1,10 @@
 import {
   Building2,
-  User,
-  CheckCircle2,
-  Clock,
   ChevronRight,
 } from "lucide-react";
 
-const activities = [
-  {
-    icon: Building2,
-    title: "Applied to Google",
-    time: "2 hours ago",
-    color: "bg-blue-100 text-blue-600",
-  },
-  {
-    icon: User,
-    title: "Profile Updated",
-    time: "Yesterday",
-    color: "bg-green-100 text-green-600",
-  },
-  {
-    icon: Clock,
-    title: "Microsoft Drive Announced",
-    time: "Yesterday",
-    color: "bg-amber-100 text-amber-600",
-  },
-  {
-    icon: CheckCircle2,
-    title: "Amazon Application Submitted",
-    time: "3 days ago",
-    color: "bg-purple-100 text-purple-600",
-  },
-];
 
-function RecentActivity() {
+function RecentActivity({ activities = [] }) {
   return (
     <div className="rounded-2xl bg-white p-6 shadow-md transition hover:shadow-xl">
 
@@ -58,33 +29,25 @@ function RecentActivity() {
 
       <div className="space-y-4">
 
-        {activities.map((activity, index) => {
-          const Icon = activity.icon;
-
-          return (
+        {activities.length > 0 ? (
+          activities.map((activity) => (
             <div
-              key={index}
+              key={activity._id}
               className="flex items-start gap-4 rounded-xl p-3 transition hover:bg-slate-50"
             >
-
-              <div
-                className={`h-10 w-10 rounded-full flex items-center justify-center ${activity.color}`}
-              >
-                <Icon size={18} />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-blue-600">
+                <Building2 size={18} />
               </div>
 
               <div className="flex-1">
-
                 <h3 className="font-semibold text-slate-800">
-                  {activity.title}
+                  {activity.student?.name} applied to {activity.company?.name}
                 </h3>
 
                 <p className="text-sm text-slate-500">
-                  {activity.time}
+                  Status: {activity.status}
                 </p>
-
               </div>
-
             </div>
           );
         })}

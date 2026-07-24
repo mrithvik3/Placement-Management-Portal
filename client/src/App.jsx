@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyApplications from "./pages/MyApplications";
+import CompanyApplicants from "./pages/CompanyApplicants";
 
 function App() {
   return (
@@ -23,6 +24,14 @@ function App() {
         element={
           <ProtectedRoute>
             <Companies />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/companies/:companyId/applicants"
+        element={
+          <ProtectedRoute>
+            <CompanyApplicants />
           </ProtectedRoute>
         }
       />
