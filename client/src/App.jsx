@@ -5,11 +5,14 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyApplications from "./pages/MyApplications";
 import CompanyApplicants from "./pages/CompanyApplicants";
+import Register from "./pages/Register";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       <Route
         path="/dashboard"
@@ -19,6 +22,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/companies"
         element={
@@ -27,6 +31,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/companies/:companyId/applicants"
         element={
@@ -35,11 +40,21 @@ function App() {
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/applications"
         element={
           <ProtectedRoute>
             <MyApplications />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
           </ProtectedRoute>
         }
       />

@@ -1,76 +1,166 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+  FaGraduationCap,
+} from "react-icons/fa";
+import toast from "react-hot-toast";
 import { loginUser } from "../services/authService";
+import "../styles/auth.css";
 
-function Login() {
+export default function Login() {
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const navigate = useNavigate();
-
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     try {
-      const data = await loginUser(formData);
+      const data = await loginUser({
+        email: formData.email.trim(),
+        password: formData.password,
+      });
 
-        // Save token
-        localStorage.setItem("token", data.token);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-        // Save user
-        localStorage.setItem("user", JSON.stringify(data.user));
+      toast.success("Login Successful!");
 
-        alert("Login Successful!");
-
-        console.log("Token:", localStorage.getItem("token"));
-        console.log("User:", JSON.parse(localStorage.getItem("user")));
-
-        navigate("/dashboard");
-    } catch (error) {
-      alert(error.response?.data?.message || "Login Failed");
+      navigate("/dashboard");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Login Failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="auth-container">
+      {/* Left Side */}
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
+      <div className="auth-left">
+        <div className="auth-brand">
+          <h1>
+            <FaGraduationCap /> PlacePro
+          </h1>
 
-        <br />
-        <br />
+          <p>
+            A modern Placement Management Portal that helps students,
+            recruiters and placement officers manage the complete campus
+            recruitment process.
+          </p>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+          <ul>
+            <li>✔ Track Applications</li>
+            <li>✔ Manage Companies</li>
+            <li>✔ Resume Management</li>
+            <li>✔ Placement Dashboard</li>
+          </ul>
+        </div>
+      </div>
 
-        <br />
-        <br />
+      {/* Right Side */}
 
-        <button type="submit">Login</button>
-      </form>
+      <div className="auth-right">
+        <div className="auth-card">
+
+          <h2>Welcome Back 👋</h2>
+
+          <p className="auth-subtitle">
+            Login to continue
+          </p>
+
+          <form onSubmit={handleSubmit}>
+
+            <div className="form-group">
+              <label>
+                <FaEnvelope /> Email
+              </label>
+
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+
+              <label>
+                <FaLock /> Password
+              </label>
+
+              <div className="password-wrapper">
+
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() =>
+                    setShowPassword(!showPassword)
+                  }
+                >
+                  {showPassword ? (
+                    <FaEyeSlash />
+                  ) : (
+                    <FaEye />
+                  )}
+                </button>
+
+              </div>
+
+            </div>
+
+            <button
+              className="auth-btn"
+              disabled={loading}
+            >
+              {loading
+                ? "Logging in..."
+                : "Login"}
+            </button>
+
+          </form>
+
+          <div className="auth-footer">
+            Don't have an account?{" "}
+            <Link to="/register">
+              Register
+            </Link>
+          </div>
+
+        </div>
+      </div>
     </div>
   );
 }
-
-export default Login;

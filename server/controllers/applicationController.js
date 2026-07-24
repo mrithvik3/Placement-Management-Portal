@@ -126,7 +126,21 @@ export const updateApplicationStatus = async (req, res) => {
       });
     }
 
-    application.status = status;
+    const validStatuses = [
+  "Applied",
+  "Shortlisted",
+  "Interview",
+  "Selected",
+  "Rejected",
+];
+
+if (!validStatuses.includes(status)) {
+  return res.status(400).json({
+    message: "Invalid application status.",
+  });
+}
+
+application.status = status;
 
     await application.save();
 

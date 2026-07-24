@@ -1,15 +1,9 @@
-import {
-  Building2,
-  ChevronRight,
-} from "lucide-react";
-
+import { Building2, ChevronRight } from "lucide-react";
 
 function RecentActivity({ activities = [] }) {
   return (
     <div className="rounded-2xl bg-white p-6 shadow-md transition hover:shadow-xl">
-
       <div className="mb-6 flex items-center justify-between">
-
         <div>
           <h2 className="text-xl font-bold text-slate-900">
             Recent Activity
@@ -24,11 +18,9 @@ function RecentActivity({ activities = [] }) {
           View All
           <ChevronRight size={16} />
         </button>
-
       </div>
 
       <div className="space-y-4">
-
         {activities.length > 0 ? (
           activities.map((activity) => (
             <div
@@ -49,11 +41,13 @@ function RecentActivity({ activities = [] }) {
                 </p>
               </div>
             </div>
-          );
-        })}
-
+          ))
+        ) : (
+          <p className="text-center text-slate-500">
+            No recent activity.
+          </p>
+        )}
       </div>
-
     </div>
   );
 }

@@ -1,54 +1,51 @@
+import "./StatsCard.css";
 import {
-  TrendingUp,
-  Building2,
-  BriefcaseBusiness,
-  CalendarDays,
-} from "lucide-react";
+  FaBuilding,
+  FaFileAlt,
+  FaCalendarCheck,
+  FaTrophy,
+} from "react-icons/fa";
 
-const icons = {
-  companies: Building2,
-  applied: BriefcaseBusiness,
-  upcoming: CalendarDays,
-  offers: TrendingUp,
+const cardConfig = {
+  companies: {
+    icon: <FaBuilding />,
+    color: "#3b82f6",
+    growth: "+12%",
+  },
+  applied: {
+    icon: <FaFileAlt />,
+    color: "#8b5cf6",
+    growth: "+18%",
+  },
+  upcoming: {
+    icon: <FaCalendarCheck />,
+    color: "#f59e0b",
+    growth: "+6%",
+  },
+  offers: {
+    icon: <FaTrophy />,
+    color: "#22c55e",
+    growth: "+9%",
+  },
 };
 
-function StatsCard({
-  title,
-  value,
-  type,
-}) {
-  const Icon = icons[type];
+export default function StatsCard({ title, value, type }) {
+  const config = cardConfig[type];
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition duration-300 border border-slate-100">
-
-      <div className="flex justify-between items-center">
-
-        <div>
-
-          <p className="text-slate-500 text-sm">
-            {title}
-          </p>
-
-          <h2 className="text-3xl font-bold mt-2">
-            {value}
-          </h2>
-
-        </div>
-
-        <div className="bg-blue-100 p-3 rounded-xl">
-
-          <Icon
-            className="text-blue-600"
-            size={28}
-          />
-
-        </div>
-
+    <div className="stats-card">
+      <div
+        className="stats-icon"
+        style={{ background: config.color }}
+      >
+        {config.icon}
       </div>
 
+      <div className="stats-content">
+        <h4>{title}</h4>
+        <h2>{value}</h2>
+        <span>{config.growth}</span>
+      </div>
     </div>
   );
 }
-
-export default StatsCard;
